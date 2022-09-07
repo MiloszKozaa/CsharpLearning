@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    internal class MainGame
+    internal interface IMainGame
+    {
+        void StartMainGame();
+    }
+
+    internal class MainGame : IMainGame
     {
 
         private readonly IStarterGame _starterGame;
