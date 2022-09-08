@@ -15,7 +15,7 @@ namespace Game
     {
         public string GetUserInput()
         {
-            Console.Write("Write your choice: ");
+            Console.Write("Your choice: ");
             string userChoice = Console.ReadLine();
             return userChoice;
         }

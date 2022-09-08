@@ -14,6 +14,7 @@ serviceCollection.AddTransient<IMainGame, MainGame>();
 serviceCollection.AddTransient<IRandomChoice, RandomChoice>();
 serviceCollection.AddTransient<IRandomNumber, RandomNumber>();
 serviceCollection.AddTransient<IUserInputService, UserInputService>();
+serviceCollection.AddTransient<ITotalValue, TotalValue>();
 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 

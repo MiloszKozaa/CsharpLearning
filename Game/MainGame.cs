@@ -18,45 +18,61 @@ namespace Game
         private readonly IRandomNumber _randomNumber;
         private readonly IUserInputService _userInputService;
         private readonly ICurrentRound _currentRound;
+        private readonly ITotalValue _totalValue;
 
-        public MainGame(IStarterGame starterGame, IRandomNumber randomNumber, IUserInputService userInputService, ICurrentRound currentRound)
+        public MainGame(IStarterGame starterGame, IRandomNumber randomNumber, IUserInputService userInputService, ICurrentRound currentRound, ITotalValue totalValue)
         {
             _starterGame = starterGame;
             _randomNumber = randomNumber;
             _userInputService = userInputService;
             _currentRound = currentRound;
+            _totalValue = totalValue;
         }
 
         public void StartMainGame()
         {
-            int totalValue = 0;
             Winner winner = _starterGame.Start();
             int randomNumber;
             int userChoice;
+
+            Console.WriteLine("This is a game in which you will win by getting the 100 number first.");
+            Console.WriteLine("You can onlu chooce number between 1 and 10.");
+            Console.WriteLine("Enjoy!");
+
             if (winner == Winner.User)
             {
-                do
+                while (_totalValue.GetTotalValue() <= 100)
                 {
                     Console.WriteLine("Round: " + _currentRound.GetCurrent());
-
-                    userChoice = int.Parse(_userInputService.GetUserInput());
-
-                    randomNumber = _randomNumber.GetRandomNumber(10) + 1;
-                    Console.WriteLine(randomNumber + " comp");
-
-                    totalValue += randomNumber + userChoice;
-
                     Console.WriteLine();
-                    Console.WriteLine(totalValue + " total");
+
+                    if (_totalValue.GetTotalValue() < 100)
+                    {
+                        
+                        userChoice = int.Parse(_userInputService.GetUserInput());
+                        randomNumber = 0;
+                        _totalValue.UpdateTotalValue(userChoice, randomNumber);
+                    }
+                    if (_totalValue.GetTotalValue() < 100)
+                    {
+                        randomNumber = _randomNumber.GetRandomNumber(10) + 1;
+                        userChoice = 0;
+                        Console.WriteLine("AI choice: " + randomNumber);
+                        _totalValue.UpdateTotalValue(userChoice, randomNumber);
+                    }
+
+                        Console.WriteLine();
+                    Console.WriteLine("Total Value: " + _totalValue.GetTotalValue());
+                    Console.WriteLine();
 
                     _currentRound.Increment();
 
-                } while (totalValue < 100);
+                };
             }
             
             if (winner == Winner.Computer)
             {
-
+                Console.WriteLine("Computer starts the game");
             }
 
             
