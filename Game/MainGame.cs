@@ -31,24 +31,35 @@ namespace Game
         {
             int totalValue = 0;
             Winner winner = _starterGame.Start();
-            
-            //int userChoice = int.Parse(_userInputService.GetUserInput());
-
-            do
+            int randomNumber;
+            int userChoice;
+            if (winner == Winner.User)
             {
-                int randomNumber = _randomNumber.GetRandomNumber(10) + 1;
+                do
+                {
+                    Console.WriteLine("Round: " + _currentRound.GetCurrent());
 
-                Console.WriteLine("Round: " + _currentRound.GetCurrent());
+                    userChoice = int.Parse(_userInputService.GetUserInput());
 
+                    randomNumber = _randomNumber.GetRandomNumber(10) + 1;
+                    Console.WriteLine(randomNumber + " comp");
 
-                totalValue += randomNumber;
+                    totalValue += randomNumber + userChoice;
 
-                Console.WriteLine(randomNumber + " rand");
-                Console.WriteLine(totalValue + " total");
+                    Console.WriteLine();
+                    Console.WriteLine(totalValue + " total");
 
-                _currentRound.Increment();
+                    _currentRound.Increment();
 
-            } while (totalValue < 100);
+                } while (totalValue < 100);
+            }
+            
+            if (winner == Winner.Computer)
+            {
+
+            }
+
+            
 
             Console.ReadLine();
         }
