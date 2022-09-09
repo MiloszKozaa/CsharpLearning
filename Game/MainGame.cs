@@ -19,14 +19,16 @@ namespace Game
         private readonly IUserInputService _userInputService;
         private readonly ICurrentRound _currentRound;
         private readonly ITotalValue _totalValue;
+        private readonly ICheckUserInputService _checkUserInputService;
 
-        public MainGame(IStarterGame starterGame, IRandomNumber randomNumber, IUserInputService userInputService, ICurrentRound currentRound, ITotalValue totalValue)
+        public MainGame(IStarterGame starterGame, IRandomNumber randomNumber, IUserInputService userInputService, ICurrentRound currentRound, ITotalValue totalValue, ICheckUserInputService checkUserInputService)
         {
             _starterGame = starterGame;
             _randomNumber = randomNumber;
             _userInputService = userInputService;
             _currentRound = currentRound;
             _totalValue = totalValue;
+            _checkUserInputService = checkUserInputService;
         }
 
         public void StartMainGame()
@@ -45,23 +47,13 @@ namespace Game
                 {
                     Console.WriteLine("Round: " + _currentRound.GetCurrent());
                     Console.WriteLine();
-
-                    if (_totalValue.GetTotalValue() < 100)
-                    {
                         
-                        userChoice = int.Parse(_userInputService.GetUserInput());
-                        randomNumber = 0;
-                        _totalValue.UpdateTotalValue(userChoice, randomNumber);
-                    }
-                    if (_totalValue.GetTotalValue() < 100)
-                    {
-                        randomNumber = _randomNumber.GetRandomNumber(10) + 1;
-                        userChoice = 0;
-                        Console.WriteLine("AI choice: " + randomNumber);
-                        _totalValue.UpdateTotalValue(userChoice, randomNumber);
-                    }
+                    userChoice = _checkUserInputService.GetCheckedUserInputService(int.Parse(_userInputService.GetUserInput()));
+                    randomNumber = _randomNumber.GetRandomNumber(10) + 1;
+                    Console.WriteLine("AI choice: " + randomNumber);
+                    _totalValue.UpdateTotalValue(userChoice, randomNumber);
 
-                        Console.WriteLine();
+                    Console.WriteLine();
                     Console.WriteLine("Total Value: " + _totalValue.GetTotalValue());
                     Console.WriteLine();
 
