@@ -10,6 +10,7 @@ namespace Game
     {
         int GetTotalValue();
         int UpdateTotalValue(int user, int computer);
+        bool CheckTotalValue();
     }
     internal class TotalValue : ITotalValue
     {
@@ -29,6 +30,24 @@ namespace Game
         {
             totalValue += user + computer;
             return totalValue;
+        }
+
+        public bool CheckTotalValue()
+        {
+            bool highestNumber;
+
+            if (totalValue == 100)
+            {
+                highestNumber = true;
+                return highestNumber;
+            }
+            if (totalValue > 100)
+            {
+                Console.WriteLine("tooHighNumber");
+                highestNumber = false;
+                return highestNumber;
+            }
+            throw new Exception();
         }
     }
 }

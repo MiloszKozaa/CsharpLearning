@@ -43,7 +43,7 @@ namespace Game
 
             if (winner == Winner.User)
             {
-                while (_totalValue.GetTotalValue() <= 100)
+                while (_totalValue.CheckTotalValue())
                 {
                     Console.WriteLine("Round: " + _currentRound.GetCurrent());
                     Console.WriteLine();
